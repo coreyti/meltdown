@@ -1,0 +1,17 @@
+#!/usr/bin/ruby
+
+require 'rubygems'
+require 'thor'
+require 'meltdown/version'
+
+module Meltdown
+  class CLI < Thor
+    include Thor::Actions
+    default_task :help
+
+    PROJ_CONFIG = ".meltdown"
+    HOME_CONFIG = "#{ENV['HOME']}/.meltdown"
+  end
+end
+
+Meltdown::CLI.start

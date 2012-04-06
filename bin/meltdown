@@ -1,8 +1,10 @@
 #!/usr/bin/ruby
 
 require 'rubygems'
+require 'fileutils'
+require 'rexec'
 require 'thor'
-require 'meltdown/version'
+require 'meltdown'
 
 module Meltdown
   class CLI < Thor
@@ -11,6 +13,72 @@ module Meltdown
 
     PROJ_CONFIG = ".meltdown"
     HOME_CONFIG = "#{ENV['HOME']}/.meltdown"
+
+    desc "start", "Enable meltdown"
+    def start
+      fail(:install) unless installed?
+      fail(:sudo)    unless as_root?
+
+      Meltdown::DnsServer.start
+    end
+
+    desc "stop", "Disable meltdown"
+    def stop
+      fail(:install) unless installed?
+      fail(:sudo)    unless as_root?
+
+      Meltdown::DnsServer.stop
+    end
+
+    desc "install", "Install meltdown (run as root)"
+    # method_option :tld, :type => :string, :default => 'dev'
+    def install
+      fail(:sudo) unless as_root?
+
+      source = File.expand_path('../../lib/meltdown/resolver.conf', __FILE__)
+      target = File.join('/etc/resolver/dev')
+
+      say "meltdown... installing resolver config at #{target}"
+      FileUtils.cp(source, target)
+
+      File.open(HOME_CONFIG, 'w') do |f|
+        f.puts "MELTDOWN_RESOLVER=#{target}"
+      end
+      FileUtils.chown(ENV['SUDO_USER'], nil, HOME_CONFIG)
+    end
+
+    private
+
+      def fail(type)
+        case type
+        when :install
+          say "\nmeltdown is not installed.\n\n"
+          $stderr.puts
+          $stderr.puts "Apologies, 'meltdown' is not yet installed"
+          $stderr.puts
+        when :sudo
+          $stderr.puts
+          $stderr.puts "Apologies, 'meltdown' must be run as root"
+          $stderr.puts
+          $stderr.puts "  # system (without rvm)"
+          $stderr.puts "  sudo meltdown install"
+          $stderr.puts
+          $stderr.puts "  # using rvm"
+          $stderr.puts "  rvmsudo meltdown install"
+          $stderr.puts
+        end
+
+        help
+        exit 1
+      end
+
+      def installed?
+        installed = File.exist?(HOME_CONFIG)
+      end
+
+      def as_root?
+        RExec.current_user == 'root'
+      end
   end
 end
 

@@ -1,11 +1,14 @@
 # Meltdown
 
-meltdown... an alternative to [pow](http://pow.cx/) and
+meltdown... An alternative to [pow](http://pow.cx/) and
 [powder](http://git.io/powder)
 
-meltdown... a result of my frustrations with the above.  handles local DNS,
-like `pow`, but assumes that (read "allows for") you to set up your own
+meltdown... A result of my frustrations with the above.  Handles local DNS,
+like *pow*, but assumes that (read "allows for") you to set up your own
 http --> app server configuration (e.g., with nginx).
+
+At some future point, *meltdown* may include http proxy-ing capabilities,
+like *pow*, but it's just DNS for now.
 
 ## Installation
 

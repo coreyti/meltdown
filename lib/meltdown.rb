@@ -1,5 +1,5 @@
 require "meltdown/version"
 
 module Meltdown
-  # Your code goes here...
+  autoload :DnsServer, "meltdown/dns_server"
 end

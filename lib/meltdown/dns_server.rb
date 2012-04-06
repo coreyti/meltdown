@@ -17,6 +17,11 @@ module Meltdown
             transaction.respond!("127.0.0.1")
           end
 
+          match(/.*\.dev$/, :AAAA) do |match, transaction|
+            logger.info "DNS match AAAA : #{transaction.inspect}"
+            transaction.respond!("::1")
+          end
+
           match("1.0.0.127.in-addr.arpa", :PTR) do |transaction|
             logger.info "DNS match PTR  : #{transaction.inspect}"
             transaction.respond!(Name.create("default.dev."))

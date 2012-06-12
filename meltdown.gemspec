@@ -15,7 +15,7 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = Meltdown::VERSION
 
-  gem.add_dependency 'rexec',   '>= 1.4.1'
-  gem.add_dependency 'rubydns', '>= 0.3.4'
+  gem.add_dependency 'rexec',   '~> 1.4.0'
+  gem.add_dependency 'rubydns', '~> 0.4.0'
   gem.add_dependency 'thor',    '>= 0.11.5'
 end

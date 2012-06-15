@@ -35,3 +35,10 @@ TODO: Write usage instructions here
 3. Commit your changes (`git commit -am 'Added some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+## Credits/Contributors
+
+  * [Corey Innis](http://github.com/coreyti):  
+    Meltdown author.
+  * [Samuel Williams](https://github.com/ioquatix):  
+    RubyDNS author.  contributor for RubyDNS version change.

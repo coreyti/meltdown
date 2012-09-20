@@ -39,6 +39,7 @@ module Meltdown
       target = File.join('/etc/resolver/dev')
 
       say "meltdown... installing resolver config at #{target}"
+      FileUtils.mkdir_p(target)
       FileUtils.cp(source, target)
 
       File.open(HOME_CONFIG, 'w') do |f|

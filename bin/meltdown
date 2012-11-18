@@ -36,10 +36,11 @@ module Meltdown
       fail(:sudo) unless as_root?
 
       source = File.expand_path('../../lib/meltdown/resolver.conf', __FILE__)
-      target = File.join('/etc/resolver/dev')
+      parent = File.join('/etc/resolver')
+      target = File.join(parent, 'dev')
 
       say "meltdown... installing resolver config at #{target}"
-      FileUtils.mkdir_p(target)
+      FileUtils.mkdir_p(parent)
       FileUtils.cp(source, target)
 
       File.open(HOME_CONFIG, 'w') do |f|
